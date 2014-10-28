@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright 2014 Google, Inc
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<resources>
+
+    <string name="app_name">YouTube WatchMe</string>
+    <string name="button_create">CREATE LIVE EVENT</string>
+    <string name="connection_to_google_play_failed">Connection to Play Services failed.</string>
+    <string name="not_signed_in">Not signed in</string>
+    <string name="error">Error</string>
+    <string name="error_format">[Error] %s</string>
+    <string name="refresh">Refresh</string>
+    <string name="accounts">Accounts</string>
+    <string name="pick_one_of_your_videos_to_submit">Create a new live event or click on one of your events to start streaming</string>
+    <string name="no_videos_to_show_here_">No videos to show here.</string>
+    <string name="avatar">avatar</string>
+    <string name="activeStreamingStatus">Currently streaming video.</string>
+    <string name="activeStreamingLabel">Watch Me is streaming!</string>
+    <string name="loadingEvents">Loading events. Please wait…</string>
+    <string name="creatingEvent">Creating event. Please wait…</string>
+    <string name="streamingOn">STREAMING</string>
+    <string name="streamingOff">PAUSED</string>
+    <string name="startEvent">START EVENT</string>
+    <string name="endEvent">END EVENT</string>
+    <string name="startingEvent">Starting event. Please wait…</string>
+    <string name="endingEvent">Ending event. Please wait…</string>
+    <string name="videoThumbnail">video thumbnail</string>
+</resources>
