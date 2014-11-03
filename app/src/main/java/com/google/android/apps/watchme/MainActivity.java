@@ -38,6 +38,7 @@ import com.google.android.apps.watchme.util.YouTubeApi;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
@@ -309,6 +310,8 @@ public class MainActivity extends Activity implements
                     .build();
             try {
                 return YouTubeApi.getLiveEvents(youtube);
+            } catch (UserRecoverableAuthIOException e) {
+                startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
             } catch (IOException e) {
                 Log.e(MainActivity.APP_NAME, "", e);
             }
@@ -348,6 +351,9 @@ public class MainActivity extends Activity implements
                 YouTubeApi.createLiveEvent(youtube, "Event - " + date,
                         "A live streaming event - " + date);
                 return YouTubeApi.getLiveEvents(youtube);
+
+            } catch (UserRecoverableAuthIOException e) {
+                startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
             } catch (IOException e) {
                 Log.e(MainActivity.APP_NAME, "", e);
             }
@@ -381,6 +387,8 @@ public class MainActivity extends Activity implements
                     .build();
             try {
                 YouTubeApi.startEvent(youtube, params[0]);
+            } catch (UserRecoverableAuthIOException e) {
+                startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
             } catch (IOException e) {
                 Log.e(MainActivity.APP_NAME, "", e);
             }
@@ -412,6 +420,8 @@ public class MainActivity extends Activity implements
                 if (params.length >= 1) {
                     YouTubeApi.endEvent(youtube, params[0]);
                 }
+            } catch (UserRecoverableAuthIOException e) {
+                startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
             } catch (IOException e) {
                 Log.e(MainActivity.APP_NAME, "", e);
             }
