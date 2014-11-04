@@ -121,8 +121,8 @@ JNIEXPORT jboolean JNICALL Java_com_google_android_apps_watchme_Ffmpeg_init(JNIE
   video_codec_ctx->codec_type = AVMEDIA_TYPE_VIDEO;
   video_codec_ctx->level = 31;
 
-  video_codec_ctx->width = 320;
-  video_codec_ctx->height = 240;
+  video_codec_ctx->width = width;
+  video_codec_ctx->height = height;
   video_codec_ctx->pix_fmt = PIX_FMT_YUV420P;
   video_codec_ctx->rc_max_rate = 0;
   video_codec_ctx->rc_buffer_size = 0;
