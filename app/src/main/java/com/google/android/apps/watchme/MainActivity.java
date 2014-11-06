@@ -322,6 +322,7 @@ public class MainActivity extends Activity implements
         protected void onPostExecute(
                 List<EventData> fetchedEvents) {
             if (fetchedEvents == null) {
+                progressDialog.dismiss();
                 return;
             }
 
