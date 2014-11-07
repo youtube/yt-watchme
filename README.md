@@ -12,9 +12,11 @@ To use this application,
 1) In your [Google Developers Console](https://console.developers.google.com),
 - Enable the YouTube Data API v3 and Google+ API.
 - Create a client ID for Android, using your SHA1 and package name.
-2) Include cross-platform compiled streaming libraries.
+2) [Enable YouTube Live Streaming for your channel](https://support.google.com/youtube/answer/2474026?hl=en).
+3) Update the [JNI code](https://github.com/youtube/yt-watchme/blob/master/app/src/main/jni/ffmpeg-jni.c) with respect to [Live Streaming Guide](https://support.google.com/youtube/answer/2853702?hl=en).
+4) Include cross-platform compiled streaming libraries.
 Either
-- libffmpeg.so under src/main/jniLibs/armeabi,
+- [libffmpeg.so](https://trac.ffmpeg.org/wiki/CompilationGuide/Android) under src/main/jniLibs/armeabi,
 or
 - another streaming library with modifying VideoStreamingInterface
 
