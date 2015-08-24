@@ -33,7 +33,6 @@ import com.google.android.apps.watchme.util.ImageFetcher;
 import com.google.android.apps.watchme.util.ImageWorker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.PlusOneButton;

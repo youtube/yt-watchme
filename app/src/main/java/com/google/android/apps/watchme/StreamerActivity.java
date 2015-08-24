@@ -50,7 +50,6 @@ public class StreamerActivity extends Activity {
     public static final int CAMERA_HEIGHT = 480;
     private static final int REQUEST_CAMERA_MICROPHONE = 0;
 
-
     // Member variables
     private StreamerService streamerService;
     private ServiceConnection streamerConnection = new ServiceConnection() {
@@ -179,8 +178,12 @@ public class StreamerActivity extends Activity {
                 permissions.add(cameraPermission);
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                         Manifest.permission.CAMERA)) {
-                    // Provide rationale in Snackbar with button to request permission
+                    // Provide rationale in Snackbar to request permission
                     Snackbar.make(preview, R.string.permission_camera_rationale,
+                            Snackbar.LENGTH_INDEFINITE).show();
+                } else {
+                    // Explain in Snackbar to turn on permission in settings
+                    Snackbar.make(preview, R.string.permission_camera_explain,
                             Snackbar.LENGTH_INDEFINITE).show();
                 }
             }
@@ -188,8 +191,12 @@ public class StreamerActivity extends Activity {
                 permissions.add(microphonePermission);
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                         Manifest.permission.RECORD_AUDIO)) {
-                    // Provide rationale in Snackbar with button to request permission
+                    // Provide rationale in Snackbar to request permission
                     Snackbar.make(preview, R.string.permission_microphone_rationale,
+                            Snackbar.LENGTH_INDEFINITE).show();
+                } else {
+                    // Explain in Snackbar to turn on permission in settings
+                    Snackbar.make(preview, R.string.permission_microphone_explain,
                             Snackbar.LENGTH_INDEFINITE).show();
                 }
             }

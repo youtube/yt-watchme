@@ -41,4 +41,6 @@
     <string name="permission_camera_rationale">App needs camera for video stream.</string>
     <string name="permission_microphone_rationale">App needs microphone for audio stream.</string>
     <string name="permissions_not_granted">Streaming service won\'t be able to work without camera and microphone permissions.</string>
+    <string name="permission_camera_explain">You need to turn on the camera permission in settings dialog for this app for streamer to work.</string>
+    <string name="permission_microphone_explain">You need to turn on the record audio permission in settings dialog for this app for streamer to work.</string>
 </resources>
