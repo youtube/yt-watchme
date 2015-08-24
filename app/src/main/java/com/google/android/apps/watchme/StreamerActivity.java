@@ -50,7 +50,6 @@ public class StreamerActivity extends Activity {
     public static final int CAMERA_HEIGHT = 480;
     private static final int REQUEST_CAMERA_MICROPHONE = 0;
 
-
     // Member variables
     private StreamerService streamerService;
     private ServiceConnection streamerConnection = new ServiceConnection() {
