@@ -14,15 +14,19 @@
 
 package com.google.android.apps.watchme;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +34,9 @@ import android.widget.ToggleButton;
 
 import com.google.android.apps.watchme.util.Utils;
 import com.google.android.apps.watchme.util.YouTubeApi;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Ibrahim Ulukaya <ulukaya@google.com>
@@ -41,6 +48,8 @@ public class StreamerActivity extends Activity {
     // TODO: Stop hardcoding this and read values from the camera's supported sizes.
     public static final int CAMERA_WIDTH = 640;
     public static final int CAMERA_HEIGHT = 480;
+    private static final int REQUEST_CAMERA_MICROPHONE = 0;
+
 
     // Member variables
     private StreamerService streamerService;
@@ -160,9 +169,71 @@ public class StreamerActivity extends Activity {
         wakeLock.acquire();
 
         if (!streamerService.isStreaming()) {
-            streamerService.startStreaming(rtmpUrl);
+
+            String cameraPermission = Manifest.permission.CAMERA;
+            String microphonePermission = Manifest.permission.RECORD_AUDIO;
+            int hasCamPermission = checkSelfPermission(cameraPermission);
+            int hasMicPermission = checkSelfPermission(microphonePermission);
+            List<String> permissions = new ArrayList<String>();
+            if (hasCamPermission != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(cameraPermission);
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.CAMERA)) {
+                    // Provide rationale in Snackbar with button to request permission
+                    Snackbar.make(preview, R.string.permission_camera_rationale,
+                            Snackbar.LENGTH_INDEFINITE).show();
+                }
+            }
+            if (hasMicPermission != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(microphonePermission);
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.RECORD_AUDIO)) {
+                    // Provide rationale in Snackbar with button to request permission
+                    Snackbar.make(preview, R.string.permission_microphone_rationale,
+                            Snackbar.LENGTH_INDEFINITE).show();
+                }
+            }
+            if (!permissions.isEmpty()) {
+                String[] params = permissions.toArray(new String[permissions.size()]);
+                ActivityCompat.requestPermissions(this, params, REQUEST_CAMERA_MICROPHONE);
+            } else {
+                // We already have permission, so handle as normal
+                streamerService.startStreaming(rtmpUrl);
+            }
         }
     }
+
+    /**
+     * Callback received when a permissions request has been completed.
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CAMERA_MICROPHONE: {
+                Log.i(MainActivity.APP_NAME, "Received response for camera with mic permissions request.");
+
+                // We have requested multiple permissions for contacts, so all of them need to be
+                // checked.
+                if (Utils.verifyPermissions(grantResults)) {
+                    // permissions were granted, yay! do the
+                    // streamer task you need to do.
+                    streamerService.startStreaming(rtmpUrl);
+                } else {
+                    Log.i(MainActivity.APP_NAME, "Camera with mic permissions were NOT granted.");
+                    Snackbar.make(preview, R.string.permissions_not_granted,
+                            Snackbar.LENGTH_SHORT)
+                            .show();
+                }
+                break;
+            }
+
+            // other 'switch' lines to check for other
+            // permissions this app might request
+        }
+        return;
+    }
+
 
     private void stopStreaming() {
         Log.d(MainActivity.APP_NAME, "stopStreaming");
