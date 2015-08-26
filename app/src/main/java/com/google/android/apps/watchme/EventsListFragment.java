@@ -32,7 +32,7 @@ import com.google.android.apps.watchme.util.EventData;
 import com.google.android.apps.watchme.util.ImageFetcher;
 import com.google.android.apps.watchme.util.ImageWorker;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.PlusOneButton;
@@ -46,7 +46,7 @@ import java.util.List;
  *         Left side fragment showing user's uploaded YouTube videos.
  */
 public class EventsListFragment extends Fragment implements
-        ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+        ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = EventsListFragment.class.getName();
     private Callbacks mCallbacks;
@@ -140,10 +140,6 @@ public class EventsListFragment extends Fragment implements
     @Override
     public void onConnectionSuspended(int i) {
 
-    }
-
-    @Override
-    public void onDisconnected() {
     }
 
     @Override
