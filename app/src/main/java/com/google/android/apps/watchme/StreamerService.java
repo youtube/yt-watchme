@@ -74,10 +74,10 @@ public class StreamerService extends Service {
 
     public void startStreaming(String streamUrl) {
         Log.d(MainActivity.APP_NAME, "startStreaming");
-            showForegroundNotification();
-            connection = new VideoStreamingConnection();
-            // TODO Pass an actual preview surface.
-            connection.open(streamUrl, camera, null);
+        showForegroundNotification();
+        connection = new VideoStreamingConnection();
+        // TODO Pass an actual preview surface.
+        connection.open(streamUrl, camera, null);
     }
 
     public void stopStreaming() {
