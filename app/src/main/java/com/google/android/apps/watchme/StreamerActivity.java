@@ -52,6 +52,9 @@ public class StreamerActivity extends Activity {
 
     // Member variables
     private StreamerService streamerService;
+    private PowerManager.WakeLock wakeLock;
+    private Preview preview;
+    private String rtmpUrl;
     private ServiceConnection streamerConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -71,9 +74,6 @@ public class StreamerActivity extends Activity {
             streamerService = null;
         }
     };
-    private PowerManager.WakeLock wakeLock;
-    private Preview preview;
-    private String rtmpUrl;
     private String broadcastId;
 
     @Override

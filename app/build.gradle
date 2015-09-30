@@ -29,5 +29,6 @@ dependencies {
     compile 'com.google.http-client:google-http-client-android:+'
     compile 'com.google.api-client:google-api-client-android:+'
     compile 'com.google.api-client:google-api-client-gson:+'
+    compile 'com.mcxiaoke.volley:library:1.0.18'
     compile 'com.google.code.gson:gson:2.3'
 }

@@ -14,27 +14,19 @@
 
 package com.google.android.apps.watchme;
 
-import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.os.Binder;
 import android.os.IBinder;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-import android.view.View;
 
 import com.google.android.apps.watchme.util.Utils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Ibrahim Ulukaya <ulukaya@google.com>

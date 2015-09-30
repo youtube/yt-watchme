@@ -30,9 +30,9 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.google.android.apps.watchme.util.EventData;
-import com.google.android.apps.watchme.util.ImageCache;
-import com.google.android.apps.watchme.util.ImageFetcher;
+import com.google.android.apps.watchme.util.NetworkSingleton;
 import com.google.android.apps.watchme.util.Utils;
 import com.google.android.apps.watchme.util.YouTubeApi;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -68,7 +68,7 @@ public class MainActivity extends Activity implements
     final JsonFactory jsonFactory = new GsonFactory();
     GoogleAccountCredential credential;
     private String mChosenAccountName;
-    private ImageFetcher mImageFetcher;
+    private ImageLoader mImageLoader;
     private EventsListFragment mEventsListFragment;
 
     @Override
@@ -77,7 +77,7 @@ public class MainActivity extends Activity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ensureFetcher();
+        ensureLoader();
 
         credential = GoogleAccountCredential.usingOAuth2(
                 getApplicationContext(), Arrays.asList(Utils.SCOPES));
@@ -123,14 +123,10 @@ public class MainActivity extends Activity implements
         new CreateLiveEventTask().execute();
     }
 
-    private void ensureFetcher() {
-        if (mImageFetcher == null) {
-            mImageFetcher = new ImageFetcher(this, 512, 512);
-            mImageFetcher
-                    .addImageCache(
-                            getFragmentManager(),
-                            new ImageCache.ImageCacheParams(
-                                    this, "cache"));
+    private void ensureLoader() {
+        if (mImageLoader == null) {
+            // Get the ImageLoader through your singleton class.
+            mImageLoader = NetworkSingleton.getInstance(this).getImageLoader();
         }
     }
 
@@ -282,9 +278,9 @@ public class MainActivity extends Activity implements
     }
 
     @Override
-    public ImageFetcher onGetImageFetcher() {
-        ensureFetcher();
-        return mImageFetcher;
+    public ImageLoader onGetImageLoader() {
+        ensureLoader();
+        return mImageLoader;
     }
 
     @Override

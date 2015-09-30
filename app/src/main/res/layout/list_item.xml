@@ -37,7 +37,7 @@
         android:paddingRight="16dp"
         android:paddingTop="16dp">
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/thumbnail"
             android:layout_width="match_parent"
             android:layout_height="160dp"

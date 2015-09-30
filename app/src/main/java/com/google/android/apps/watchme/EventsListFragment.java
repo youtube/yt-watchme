@@ -28,12 +28,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.google.android.apps.watchme.util.EventData;
-import com.google.android.apps.watchme.util.ImageFetcher;
-import com.google.android.apps.watchme.util.ImageWorker;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.PlusOneButton;
 import com.google.android.gms.plus.model.people.Person;
@@ -50,7 +50,7 @@ public class EventsListFragment extends Fragment implements
 
     private static final String TAG = EventsListFragment.class.getName();
     private Callbacks mCallbacks;
-    private ImageWorker mImageFetcher;
+    private ImageLoader mImageLoader;
     private GoogleApiClient mGoogleApiClient;
     private GridView mGridView;
 
@@ -104,8 +104,9 @@ public class EventsListFragment extends Fragment implements
         } else {
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
             if (currentPerson.hasImage()) {
-                mImageFetcher.loadImage(currentPerson.getImage().getUrl(),
-                        ((ImageView) getView().findViewById(R.id.avatar)));
+                // Set the URL of the image that should be loaded into this view, and
+                // specify the ImageLoader that will be used to make the request.
+                ((NetworkImageView) getView().findViewById(R.id.avatar)).setImageUrl(currentPerson.getImage().getUrl(), mImageLoader);
             }
             if (currentPerson.hasDisplayName()) {
                 ((TextView) getView().findViewById(R.id.display_name))
@@ -170,18 +171,18 @@ public class EventsListFragment extends Fragment implements
         }
 
         mCallbacks = (Callbacks) activity;
-        mImageFetcher = mCallbacks.onGetImageFetcher();
+        mImageLoader = mCallbacks.onGetImageLoader();
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mCallbacks = null;
-        mImageFetcher = null;
+        mImageLoader = null;
     }
 
     public interface Callbacks {
-        public ImageFetcher onGetImageFetcher();
+        public ImageLoader onGetImageLoader();
 
         public void onEventSelected(EventData event);
 
@@ -221,8 +222,7 @@ public class EventsListFragment extends Fragment implements
             EventData event = mEvents.get(position);
             ((TextView) convertView.findViewById(android.R.id.text1))
                     .setText(event.getTitle());
-            mImageFetcher.loadImage(event.getThumbUri(),
-                    (ImageView) convertView.findViewById(R.id.thumbnail));
+            ((NetworkImageView) convertView.findViewById(R.id.thumbnail)).setImageUrl(event.getThumbUri(), mImageLoader);
             if (mGoogleApiClient.isConnected()) {
                 ((PlusOneButton) convertView.findViewById(R.id.plus_button))
                         .initialize(event.getWatchUri(), null);
